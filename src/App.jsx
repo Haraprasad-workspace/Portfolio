@@ -71,6 +71,113 @@ function ThreeBg() {
   }, []);
   return <div ref={ref} className="fixed inset-0 z-0 pointer-events-none" />;
 }
+function PremiumLanding({ onEnter }) {
+  const [text, setText] = useState("");
+  const roles = [
+    "Full-Stack Developer",
+    "MERN Stack Engineer",
+    "AI Integrator",
+    "Competitive Programmer",
+  ];
+
+  const ri = useRef(0);
+  const ci = useRef(0);
+  const deleting = useRef(false);
+
+  useEffect(() => {
+    const type = () => {
+      const role = roles[ri.current];
+
+      if (!deleting.current) {
+        ci.current++;
+        setText(role.slice(0, ci.current));
+
+        if (ci.current === role.length) {
+          deleting.current = true;
+          setTimeout(type, 1600);
+          return;
+        }
+      } else {
+        ci.current--;
+        setText(role.slice(0, ci.current));
+
+        if (ci.current === 0) {
+          deleting.current = false;
+          ri.current = (ri.current + 1) % roles.length;
+        }
+      }
+
+      setTimeout(type, deleting.current ? 40 : 70);
+    };
+
+    const t = setTimeout(type, 700);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-[#020817] z-[500] overflow-hidden">
+
+      {/* Gradient Glow Background */}
+      <div className="absolute w-[600px] h-[600px] bg-blue-600/20 blur-[160px] rounded-full animate-pulse" />
+
+      {/* Glass Card */}
+      <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl px-10 py-12 text-center max-w-xl shadow-2xl">
+
+        {/* Profile Image */}
+        <div className="mb-6 flex justify-center">
+          <div className="relative w-32 h-32">
+
+            <img
+              src="/photo.jpeg"
+              alt="Hara Prasad"
+              className="w-32 h-32 rounded-full object-cover border-2 border-blue-500 shadow-lg animate-float"
+            />
+
+            <div className="absolute inset-0 rounded-full border border-blue-400/40 animate-spin-slow" />
+
+          </div>
+        </div>
+
+        {/* Animated Gradient Name */}
+        <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-indigo-400 to-cyan-400 bg-clip-text text-transparent animate-gradient">
+          Hara Prasad Mahapatra
+        </h1>
+
+        {/* Typing Tagline */}
+        <p className="font-mono text-slate-400 mb-6 text-lg">
+          {text}
+          <span className="text-blue-400 animate-pulse">|</span>
+        </p>
+
+        <p className="text-slate-500 text-sm mb-8">
+          Building intelligent web systems, scalable platforms, and AI-powered
+          applications.
+        </p>
+
+        {/* Buttons */}
+        <div className="flex items-center justify-center gap-4">
+
+          <button
+            onClick={onEnter}
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-md text-sm font-medium transition"
+          >
+            Enter Portfolio
+          </button>
+
+          <a
+            href="/resume.pdf"
+            download
+            className="px-6 py-3 border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white rounded-md text-sm transition"
+          >
+            Download Resume
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+  );
+}
 
 /* ─── CURSOR ────────────────────────────────────────────────────────────────── */
 function Cursor() {
@@ -166,7 +273,7 @@ function SectionHead({ label, title }) {
 }
 
 /* ─── NAV ───────────────────────────────────────────────────────────────────── */
-const NAV = ["About", "Skills", "Projects", "Education", "Achievements", "Contact"];
+const NAV = ["About", "Skills", "Projects", "Education", "Achievements",  "Resume","Contact"];
 
 function Nav() {
   const [active, setActive] = useState("about");
@@ -236,6 +343,48 @@ function Hero() {
   return (
     <section id="about" className="min-h-screen flex items-center px-6 pt-20">
       <div className="max-w-6xl mx-auto w-full py-24">
+        {/* Mobile: Photo first, then text */}
+        <div className="md:hidden flex flex-col items-center gap-8 mb-12">
+          <div style={{ opacity: 0, animation: "fadeUp 0.5s 0.5s forwards" }}>
+            {/* ── PHOTO SLOT ── Replace the src below with your actual photo path e.g. src="/photo.jpg" */}
+            <div className="relative w-32 h-32 shrink-0 mx-auto">
+              <div className="w-32 h-32 rounded-2xl border-2 border-slate-700 bg-slate-900 overflow-hidden flex items-center justify-center group">
+                <img
+                  src="/photo.jpeg"
+                  alt="Hara Prasad Mahapatra"
+                  className="w-full h-full object-cover object-top"
+                  onError={e => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "flex"; }}
+                />
+                {/* Fallback placeholder shown if no photo */}
+                <div className="hidden w-full h-full flex-col items-center justify-center gap-2 text-slate-600">
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
+                  <span className="text-xs font-mono text-slate-700">Add photo.jpg</span>
+                </div>
+              </div>
+              {/* Blue glow ring */}
+              <div className="absolute -inset-1 rounded-2xl border border-blue-500/20 pointer-events-none" />
+            </div>
+          </div>
+
+          {/* Mobile Stats */}
+          <div className="grid grid-cols-2 gap-3 w-full max-w-sm" style={{ opacity: 0, animation: "fadeUp 0.5s 0.6s forwards" }}>
+            {[
+              { label: "Current CPI", value: "9.76", sub: "B.Tech IT — BVM" },
+              { label: "3rd Sem SPI", value: "10.00", sub: "Perfect Score" },
+              { label: "Projects Built", value: "3+", sub: "Production" },
+              { label: "HackerRank", value: "5★", sub: "C++ · 4★ SQL" },
+            ].map(s => (
+              <div key={s.label} className="border border-slate-800 rounded-lg bg-slate-900/60 backdrop-blur-sm p-3 text-center">
+                <div className="text-lg font-bold text-slate-100 font-mono">{s.value}</div>
+                <div className="text-slate-500 text-xs font-mono mt-1">{s.label}</div>
+                <div className="text-slate-600 text-xs mt-0.5">{s.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-[1fr_auto] gap-16 items-center">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 mb-8"
@@ -244,35 +393,35 @@ function Hero() {
               <span className="text-emerald-400 text-xs font-medium font-mono">Open to opportunities · 2nd Year B.Tech IT</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl font-bold text-slate-100 leading-[1.1] tracking-tight mb-4"
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-100 leading-[1.1] tracking-tight mb-4"
               style={{ opacity: 0, animation: "fadeUp 0.5s 0.25s forwards" }}>
               Hara Prasad<br />
               <span className="text-blue-400">Mahapatra</span>
             </h1>
 
-            <div className="h-7 mb-6 font-mono text-slate-400 text-base"
+            <div className="h-6 md:h-7 mb-6 font-mono text-slate-400 text-sm md:text-base"
               style={{ opacity: 0, animation: "fadeUp 0.5s 0.4s forwards" }}>
               {typed}<span className="animate-pulse text-blue-400">|</span>
             </div>
 
-            <p className="text-slate-400 text-base leading-relaxed max-w-lg mb-8"
+            <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-lg mb-8"
               style={{ opacity: 0, animation: "fadeUp 0.5s 0.55s forwards" }}>
               2nd year B.Tech IT student at <span className="text-slate-200">BVM Engineering College, Anand</span> with a <span className="text-slate-200 font-semibold">9.76 CPI</span> and a perfect <span className="text-slate-200 font-semibold">10.0 SPI</span> in 3rd semester. I build full-stack web apps, integrate AI/ML pipelines, and love cryptographic systems.
             </p>
 
             {/* Contact info row */}
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-500 mb-10"
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs md:text-sm text-slate-500 mb-8 md:mb-10"
               style={{ opacity: 0, animation: "fadeUp 0.5s 0.65s forwards" }}>
               <span className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 Anand, Gujarat
               </span>
               <a href="mailto:haraprasadmahapatra223@gmail.com" data-h className="flex items-center gap-1.5 hover:text-blue-400 transition-colors">
-                <svg className="w-3.5 h-3.5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                 haraprasadmahapatra223@gmail.com
               </a>
               <a href="tel:9537362412" data-h className="flex items-center gap-1.5 hover:text-blue-400 transition-colors">
-                <svg className="w-3.5 h-3.5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                <svg className="w-3 h-3 md:w-3.5 md:h-3.5 text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                 +91 9537362412
               </a>
             </div>
@@ -280,29 +429,29 @@ function Hero() {
             <div className="flex items-center gap-3 flex-wrap"
               style={{ opacity: 0, animation: "fadeUp 0.5s 0.75s forwards" }}>
               <button onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })} data-h
-                className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-md transition-colors duration-200">
+                className="px-5 md:px-6 py-2 md:py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium rounded-md transition-colors duration-200">
                 View Projects
               </button>
               <a href="mailto:haraprasadmahapatra223@gmail.com" data-h
-                className="px-6 py-2.5 border border-slate-700 hover:border-slate-500 text-slate-300 text-sm font-medium rounded-md transition-colors duration-200">
+                className="px-5 md:px-6 py-2 md:py-2.5 border border-slate-700 hover:border-slate-500 text-slate-300 text-sm font-medium rounded-md transition-colors duration-200">
                 Contact Me
               </a>
               <a href="https://github.com/Haraprasad-workspace/" target="_blank" rel="noreferrer" data-h title="GitHub"
-                className="p-2.5 border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-slate-200 rounded-md transition-colors duration-200">
+                className="p-2 md:p-2.5 border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-slate-200 rounded-md transition-colors duration-200">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
               </a>
               <a href="https://www.linkedin.com/in/haraprasad-mahapatra-549a1a280/" target="_blank" rel="noreferrer" data-h title="LinkedIn"
-                className="p-2.5 border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-slate-200 rounded-md transition-colors duration-200">
+                className="p-2 md:p-2.5 border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-slate-200 rounded-md transition-colors duration-200">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               </a>
               <a href="https://www.hackerrank.com/profile/haraprasadmahap1" target="_blank" rel="noreferrer" data-h title="HackerRank"
-                className="p-2.5 border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-slate-200 rounded-md transition-colors duration-200">
+                className="p-2 md:p-2.5 border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-slate-200 rounded-md transition-colors duration-200">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c1.285 0 9.75 4.886 10.392 6 .645 1.115.645 10.885 0 12S13.287 24 12 24s-9.75-4.885-10.395-6c-.641-1.115-.641-10.885 0-12C2.25 4.886 10.715 0 12 0zm2.295 6.799c-.141 0-.258.115-.258.258v3.875H9.963V6.908h.701c.141 0 .254-.115.254-.258V6.4c0-.141-.113-.254-.254-.254H7.027c-.141 0-.254.113-.254.254v.252c0 .143.113.258.254.258h.701v10.184h-.701c-.141 0-.254.115-.254.258v.254c0 .139.113.254.254.254h3.638c.141 0 .254-.115.254-.254v-.254c0-.143-.113-.258-.254-.258h-.701V13.41h4.074v3.676h-.701c-.141 0-.258.115-.258.258v.254c0 .139.117.254.258.254H17.27c.141 0 .254-.115.254-.254v-.254c0-.143-.113-.258-.254-.258h-.699V6.908h.699c.141 0 .254-.115.254-.258V6.4c0-.141-.113-.254-.254-.254h-2.975z"/></svg>
               </a>
             </div>
           </div>
 
-          {/* Photo + Stats */}
+          {/* Photo + Stats - Desktop Only */}
           <div className="hidden md:flex flex-col items-center gap-5" style={{ opacity: 0, animation: "fadeUp 0.5s 0.5s forwards" }}>
             {/* ── PHOTO SLOT ── Replace the src below with your actual photo path e.g. src="/photo.jpg" */}
             <div className="relative w-48 h-48 shrink-0">
@@ -684,6 +833,45 @@ function Achievements() {
     </section>
   );
 }
+/* ─── RESUME ───────────────────────────────────────────────────────────── */
+function Resume() {
+  return (
+    <section id="resume" className="py-28 px-6 bg-slate-950/50">
+      <div className="max-w-6xl mx-auto text-center">
+        <SectionHead label="06 — Resume" title="Download My Resume" />
+
+        <Reveal>
+          <p className="text-slate-400 max-w-xl mx-auto mb-8">
+            You can download my latest resume to learn more about my projects,
+            technical skills, and academic achievements.
+          </p>
+
+          <a
+            href="/resume.pdf"
+            download
+            data-h
+            className="inline-flex items-center gap-3 px-6 py-3 border border-blue-500 text-blue-400 hover:bg-zinc-500 hover:text-white text-sm font-semibold rounded-md transition-all duration-200"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"
+              />
+            </svg>
+            Download Resume
+          </a>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
 
 /* ─── CONTACT ───────────────────────────────────────────────────────────────── */
 function Contact() {
@@ -808,6 +996,12 @@ function Footer() {
 
 /* ─── APP ───────────────────────────────────────────────────────────────────── */
 export default function App() {
+  const [showPortfolio, setShowPortfolio] = useState(false);
+
+  if (!showPortfolio) {
+    return <PremiumLanding onEnter={() => setShowPortfolio(true)} />;
+  }
+
   return (
     <div className="min-h-screen bg-[#020817] text-slate-100" style={{ fontFamily: "'DM Sans', sans-serif", cursor: "none" }}>
       <FontLink />
@@ -833,6 +1027,7 @@ export default function App() {
         <Projects />
         <Education />
         <Achievements />
+        <Resume />
         <Contact />
         <Footer />
       </div>
