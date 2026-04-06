@@ -405,9 +405,9 @@ function Hero() {
             </div>
 
             <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-lg mb-8"
-              style={{ opacity: 0, animation: "fadeUp 0.5s 0.55s forwards" }}>
-              2nd year B.Tech IT student at <span className="text-slate-200">BVM Engineering College, Anand</span> with a <span className="text-slate-200 font-semibold">9.76 CPI</span> and a perfect <span className="text-slate-200 font-semibold">10.0 SPI</span> in 3rd semester. I build full-stack web apps, integrate AI/ML pipelines, and love cryptographic systems.
-            </p>
+  style={{ opacity: 0, animation: "fadeUp 0.5s 0.55s forwards" }}>
+  2nd year B.Tech IT student at <span className="text-slate-200">BVM Engineering College, Anand</span> with a <span className="text-slate-200 font-semibold">9.76 CPI</span>. I am interested in MERN stack development, AI, and Data Science, and have built multiple real-world projects involving full-stack systems, real-time applications, and intelligent integrations.
+</p>
 
             {/* Contact info row */}
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs md:text-sm text-slate-500 mb-8 md:mb-10"
@@ -556,11 +556,45 @@ const PROJECTS = [
     ],
     github: "https://github.com/Haraprasad-workspace/CryptoAssure",
     live: null,
-    accent: "#3b82f6",
+    accent: "#f59e0b",
     deploy: null,
   },
   {
     num: "02",
+    title: "AuditShield",
+    subtitle: "Real-time Security Auditing SaaS Platform",
+    period: "Feb – Mar 2026",
+    badge: "Node.js · React · Supabase",
+    stack: ["Node.js", "React", "Supabase", "Grok API", "GitHub Webhooks", "Slack Webhooks"],
+    bullets: [
+      "Developed a SaaS platform (built during CharusatXOceanLabs Hackathon) for automated security auditing of repositories and files, focusing on secret detection and misconfiguration analysis.",
+      "Implemented 24/7 GitHub commit monitoring for organizations using webhook-based event listeners, triggering real-time scanning pipelines on each push event.",
+      "Integrated Slack Webhooks to deploy AuditShield as a microservice within team communication channels, enabling instant alerting, audit summaries, and remediation insights.",
+    ],
+    github: "https://github.com/Haraprasad-workspace/AuditShield",
+    live: "https://audit-shield-swart.vercel.app/",
+    accent: "#f59e0b",
+    deploy: "Vercel (Frontend) · Render (Backend)",
+  },
+  {
+    num: "03",
+    title: "SwasthyaMitra",
+    subtitle: "Smart Healthcare Management System",
+    period: "Jan – Present 2026",
+    badge: "MERN · Real-time · HealthTech",
+    stack: ["MongoDB", "Express.js", "React", "Node.js", "WebSockets", "Twilio", "Nodemailer"],
+    bullets: [
+      "Developed a full-stack healthcare system (built for Intelliverse) with real-time queue management using WebSockets to handle dynamic patient flow in clinics.",
+      "Designed an algorithm-based wait time prediction system leveraging queue data structures and request handling patterns to estimate patient waiting time.",
+      "Implemented secure authentication workflows with OTP verification (Twilio), email confirmation (Nodemailer), and role-based access control for patients, doctors, and staff.",
+    ],
+    github: "https://github.com/Haraprasad-workspace",
+    live: "https://youtu.be/Uk0m9fIE4CQ?si=OHRle5bOKXV2GG7e",
+    accent: "#f59e0b",
+    deploy: null,
+  },
+  {
+    num: "04",
     title: "Sangam",
     subtitle: "Social Connectivity Web Application",
     period: "Sep – Nov 2025",
@@ -573,11 +607,11 @@ const PROJECTS = [
     ],
     github: "https://github.com/Haraprasad-workspace/Sangam",
     live: "https://sangam-beryl.vercel.app/",
-    accent: "#10b981",
+    accent: "#f59e0b",
     deploy: "Vercel (Frontend) · Render (Backend) · Hugging Face (ML Model)",
   },
   {
-    num: "03",
+    num: "05",
     title: "ZestyCart",
     subtitle: "Web-based Food Ordering Application",
     period: "Jun – Jul 2025",
@@ -605,17 +639,21 @@ function Projects() {
           {PROJECTS.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.1}>
               <div className={`border rounded-xl overflow-hidden transition-all duration-300 ${open === i ? "border-slate-600 bg-slate-900" : "border-slate-800 bg-slate-900/40 hover:border-slate-700 hover:bg-slate-900/60"}`}>
+                
                 <button className="w-full text-left p-6 flex items-start gap-4" onClick={() => setOpen(open === i ? null : i)} data-h>
                   <span className="font-mono text-slate-600 text-sm mt-0.5 shrink-0 w-7">{p.num}</span>
+
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-3 mb-1">
                       <h3 className="text-lg font-semibold text-slate-100">{p.title}</h3>
-                      <span className="text-xs font-mono px-2 py-0.5 rounded-full border" style={{ borderColor: p.accent + "50", color: p.accent, background: p.accent + "15" }}>
+                      <span className="text-xs font-mono px-2 py-0.5 rounded-full border"
+                        style={{ borderColor: p.accent + "50", color: p.accent, background: p.accent + "15" }}>
                         {p.badge}
                       </span>
                     </div>
                     <p className="text-slate-500 text-sm">{p.subtitle}</p>
                   </div>
+
                   <div className="flex items-center gap-4 shrink-0 ml-4">
                     <span className="text-xs text-slate-600 font-mono hidden sm:block">{p.period}</span>
                     <svg className={`w-4 h-4 text-slate-500 transition-transform duration-300 ${open === i ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -626,23 +664,30 @@ function Projects() {
 
                 <div className={`overflow-hidden transition-all duration-500 ${open === i ? "max-h-[700px]" : "max-h-0"}`}>
                   <div className="px-6 pb-6 border-t border-slate-800">
-                    {/* ── PROJECT SCREENSHOT ── Replace src with actual screenshot, e.g. src={`/${p.title.toLowerCase()}.png`} */}
-                    <div className="mt-5 mb-6 w-full h-44 rounded-lg border border-slate-800 bg-slate-900 overflow-hidden relative flex items-center justify-center">
+
+                    {/* ✅ FIXED IMAGE SECTION */}
+                    <div className="mt-5 mb-6 w-full h-56 rounded-lg border border-slate-800 bg-slate-950 overflow-hidden relative flex items-center justify-center p-2">
                       <img
                         src={`/${p.title.toLowerCase()}.png`}
                         alt={`${p.title} screenshot`}
-                        className="w-full h-full object-cover object-top"
-                        onError={e => { e.currentTarget.style.display = "none"; e.currentTarget.nextSibling.style.display = "flex"; }}
+                        className="max-w-full max-h-full object-contain"
+                        onError={e => {
+                          e.currentTarget.style.display = "none";
+                          e.currentTarget.nextSibling.style.display = "flex";
+                        }}
                       />
+
                       {/* Fallback */}
                       <div className="hidden w-full h-full flex-col items-center justify-center gap-2 text-slate-700">
                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
-                        <span className="text-xs font-mono">Add {p.title.toLowerCase()}.png for screenshot</span>
+                        <span className="text-xs font-mono">Add {p.title.toLowerCase()}.png</span>
                       </div>
-                      {/* Accent tint overlay */}
-                      <div className="absolute inset-0 pointer-events-none rounded-lg" style={{ background: `linear-gradient(to top, ${p.accent}18 0%, transparent 60%)` }} />
+
+                      {/* Overlay */}
+                      <div className="absolute inset-0 pointer-events-none rounded-lg"
+                        style={{ background: `linear-gradient(to top, ${p.accent}18 0%, transparent 60%)` }} />
                     </div>
 
                     <div className="grid md:grid-cols-[1fr_200px] gap-8">
@@ -655,21 +700,25 @@ function Projects() {
                             </li>
                           ))}
                         </ul>
+
                         {p.deploy && <p className="text-xs text-slate-600 font-mono mb-5">Deployment: {p.deploy}</p>}
+
                         <div className="flex gap-3">
                           <a href={p.github} target="_blank" rel="noreferrer" data-h
                             className="flex items-center gap-2 px-4 py-2 border border-slate-700 hover:border-slate-500 rounded-md text-xs text-slate-400 hover:text-slate-200 transition-colors font-mono">
-                            <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
                             GitHub
                           </a>
+
                           {p.live && (
                             <a href={p.live} target="_blank" rel="noreferrer" data-h
-                              className="flex items-center gap-2 px-4 py-2 rounded-md text-xs font-mono text-white transition-colors" style={{ background: p.accent }}>
+                              className="flex items-center gap-2 px-4 py-2 rounded-md text-xs font-mono text-white transition-colors"
+                              style={{ background: p.accent }}>
                               ↗ Live Demo
                             </a>
                           )}
                         </div>
                       </div>
+
                       <div>
                         <div className="text-xs text-slate-600 font-mono mb-3 uppercase tracking-widest">Tech Stack</div>
                         <div className="flex flex-wrap gap-1.5">
@@ -679,8 +728,10 @@ function Projects() {
                         </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
+
               </div>
             </Reveal>
           ))}
